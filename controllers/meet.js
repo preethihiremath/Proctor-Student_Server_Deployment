@@ -1,6 +1,7 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import ScheduledMeetings from '../models/scheduledMeetings.js';
+import RequestedMeetings from '../models/requestedMeetings.js';
 
 const router = express.Router();
 
@@ -25,6 +26,38 @@ export const  createScheduledMeet = async (req, res) => {
     }
 }
 
+
+export const  requestMeeting = async (req, res) => {
+    const { from_name,time } = req.body;
+    const newRequestMeetings = new RequestedMeetings({ from_name,time })
+    try {
+        await newRequestMeetings.save();
+        res.status(201).json(newRequestMeetings);
+    } catch (error) {
+        res.status(409).json({ message: error.message });
+    }
+}
+
+export const  acceptMeeting = async (req, res) => {
+    const { id,from_name,time } = req.body;
+
+    const add_to_scheduledMeet = new ScheduledMeetings({ from_name,time })
+    try {
+        await add_to_scheduledMeet.save();
+        await RequestedMeetings.findByIdAndRemove(id);
+        res.json({ message: "Accepted the meeting" });
+    } catch (error) {
+        res.status(409).json({ message: error.message });
+    }
+}
+
+
+export const  rejectMeeting = async (req, res) => {
+    const { id } = req.body;
+    if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No Request with id: ${id}`);
+    await RequestedMeetings.findByIdAndRemove(id);
+    res.json({ message: "The Request is Rejected Successfully" });
+}
 
 
 export default router;
