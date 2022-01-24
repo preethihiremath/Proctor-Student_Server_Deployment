@@ -42,11 +42,15 @@ export const updateMyDetails = async (req, res) => {
 }
 
 export const googleLogin = async (req, res) => {
-    const { tokenId } = req.body;
-    client.verifyIdToken({idToken :tokenId,audience:"36235614900-hvg42mg4i5fo7gi25v2i5oardb0lcoci.apps.googleusercontent.com"}).then(
-        response =>{
-            const {email_verified,name,email}=response.payload;
-            if(email_verified){
+    const { email } = req.body;
+
+   // console.log(req.body);
+
+   // client.verifyIdToken({idToken :tokenId,audience:"36235614900-hvg42mg4i5fo7gi25v2i5oardb0lcoci.apps.googleusercontent.com"}).then(
+   //     response =>{
+  //          const {email_verified,name,email}=response.payload;
+   //         if(email_verified){
+
                 User.findOne({email}).exec((err,user) =>{
                     if(err){
                         return res.status(400).json({
@@ -58,7 +62,7 @@ export const googleLogin = async (req, res) => {
                             res.status(201).json(user);
                         }
                         else{
-                                    let password=email+"preethi";
+                                    let password=email+"abcdefgh";
                                     let newUser= new User({name,email,password});
                                     newUser.save((err,data) =>{
                                         if(err){
@@ -72,9 +76,10 @@ export const googleLogin = async (req, res) => {
                         }
                     }
                 })
-            }
-        }
-)}
+           // }
+        //}
+//)
+}
 
 
 export default router;

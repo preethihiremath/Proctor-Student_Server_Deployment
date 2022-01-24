@@ -14,6 +14,7 @@ router.put('/accept',acceptMeeting);
 router.delete('/reject', rejectMeeting);
 
 //Only Student can request
+router.get('/request',requestMeeting);
 router.post('/request',requestMeeting);
 
 export default router;
