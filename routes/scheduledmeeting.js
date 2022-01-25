@@ -1,6 +1,6 @@
 import express from 'express';
 
-import { getScheduledMeet,createScheduledMeet ,requestMeeting, acceptMeeting,rejectMeeting} from '../controllers/meet.js';
+import { getScheduledMeet,createScheduledMeet ,requestMeeting, pendingRequests,acceptMeeting,rejectMeeting} from '../controllers/meet.js';
 
 const router = express.Router();
 
@@ -14,7 +14,7 @@ router.put('/accept',acceptMeeting);
 router.delete('/reject', rejectMeeting);
 
 //Only Student can request
-router.get('/request',requestMeeting);
+router.get('/request',pendingRequests);
 router.post('/request',requestMeeting);
 
 export default router;

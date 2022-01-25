@@ -15,6 +15,15 @@ export const  getScheduledMeet = async (req, res) => {
 }
 
 
+export const pendingRequests =async (req, res) => { 
+    try {
+        const pendingRequests = await RequestedMeetings.find();       
+        res.status(200).json(pendingRequests);
+    } catch (error) {
+        res.status(404).json({ message: error.message });
+    }
+}
+
 export const  createScheduledMeet = async (req, res) => {
     const { time, from_name } = req.body;
     const newScheduledMeetings = new ScheduledMeetings({ time, from_name })
@@ -37,6 +46,7 @@ export const  requestMeeting = async (req, res) => {
         res.status(409).json({ message: error.message });
     }
 }
+
 
 export const  acceptMeeting = async (req, res) => {
     const { id,from_name,time } = req.body;
