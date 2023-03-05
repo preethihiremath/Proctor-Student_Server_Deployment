@@ -1,5 +1,5 @@
 import express, { application } from 'express';
-import bodyParser from 'body-parser';
+import bodyParser from 'body-parser'; //simplifies requests and u can access headers n all in root
 import mongoose from 'mongoose';
 import cors from 'cors';
 
@@ -13,8 +13,9 @@ app.use(bodyParser.json({ limit: '30mb', extended: true }))
 app.use(bodyParser.urlencoded({ limit: '30mb', extended: true }))
 app.use(cors());
 
+
 app.get('/' ,(req,res)=>{
-res.send('website running')
+res.send('Proctor API Server running')
 });
 
 app.use('/posts', postRoutes);

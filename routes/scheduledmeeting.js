@@ -1,6 +1,11 @@
 import express from 'express';
 
-import { getScheduledMeet,createScheduledMeet ,requestMeeting, pendingRequests,acceptMeeting,rejectMeeting} from '../controllers/meet.js';
+import { getScheduledMeet,
+         createScheduledMeet ,
+         requestMeeting,
+         pendingRequests,
+         acceptMeeting,
+         rejectMeeting} from '../controllers/meet.js';
 
 const router = express.Router();
 

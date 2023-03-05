@@ -15,7 +15,7 @@ export const getUsers = async (req, res) => {
     try {
         const allUsers = await User.find().where('role').equals('student');  
         console.log("get Users controller",allUsers);
-    
+
          console.log("result of all students", allUsers)
         res.status(200).json(allUsers);
 
@@ -31,26 +31,22 @@ export const updateMyDetails = async (req, res) => {
    // if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No post with id: ${id}`);
     const updatedUser = {phno :phno, bloodgroup:bloodgroup, fatherName:fatherName, motherName:motherName, fatherPhone:fatherPhone,motherPhone:motherPhone};
 
-       let upd =await User.findByIdAndUpdate(id, updatedUser, { new: true },function (err, docs) {
+       let upd =await User.findByIdAndUpdate(id, updatedUser, { new: true }, function (err, docs) {
         if (err){
             console.log("Stupid error",err)
         }
         else{
             console.log("Updated User : ", docs);  res.status(200).json(docs);
         }});
-      
+
 }
 
 export const googleLogin = async (req, res) => {
-    const { email } = req.body;
-
-   // console.log(req.body);
-
-   // client.verifyIdToken({idToken :tokenId,audience:"36235614900-hvg42mg4i5fo7gi25v2i5oardb0lcoci.apps.googleusercontent.com"}).then(
-   //     response =>{
-  //          const {email_verified,name,email}=response.payload;
-   //         if(email_verified){
-
+    const { tokenId } = req.body;
+    client.verifyIdToken({idToken :tokenId,audience:"36235614900-hvg42mg4i5fo7gi25v2i5oardb0lcoci.apps.googleusercontent.com"}).then(
+        response =>{
+            const {email_verified,name,email}=response.payload;
+            if(email_verified){
                 User.findOne({email}).exec((err,user) =>{
                     if(err){
                         return res.status(400).json({
@@ -62,7 +58,7 @@ export const googleLogin = async (req, res) => {
                             res.status(201).json(user);
                         }
                         else{
-                                    let password=email+"abcdefgh";
+                                    let password=email+"preethi";
                                     let newUser= new User({name,email,password});
                                     newUser.save((err,data) =>{
                                         if(err){
@@ -76,10 +72,9 @@ export const googleLogin = async (req, res) => {
                         }
                     }
                 })
-           // }
-        //}
-//)
-}
+            }
+        }
+)}
 
 
-export default router;
+export default router; 

@@ -5,6 +5,7 @@ import RequestedMeetings from '../models/requestedMeetings.js';
 
 const router = express.Router();
 
+
 export const  getScheduledMeet = async (req, res) => { 
     try {
         const scheduledMeetings = await ScheduledMeetings.find();       
